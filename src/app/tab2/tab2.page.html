@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Atividades</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-list>
+
+    <ion-item-sliding *ngFor="let a of atividades" #slidingItem>
+
+      <ion-item>
+        <ion-label>
+          <h2>{{ a.tipo }}</h2>
+          <p>
+            {{ a.duracao }} min • {{ a.data | date }} <br>
+            {{ a.local }} • {{ a.intensidade }}
+          </p>
+        </ion-label>
+
+        <ion-icon
+          *ngIf="a.favorita"
+          name="star"
+          color="warning">
+        </ion-icon>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option
+          color="danger"
+          (click)="confirmarApagar(a.id, slidingItem)">
+          Apagar
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+</ion-content>
