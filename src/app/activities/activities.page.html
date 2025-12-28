@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Activities</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/add-activity">Add</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let activity of activities">
+      <!-- ITEM PRINCIPAL -->
+      <ion-item>
+        <ion-label>
+          <h2>{{ activity.sport }}</h2>
+          <p>{{ activity.duration }} min • {{ activity.date }}</p>
+        </ion-label>
+
+        <!-- EDIT continua como botão -->
+        <ion-button fill="clear" [routerLink]="['/edit-activity', activity.id]">
+          Edit
+        </ion-button>
+      </ion-item>
+
+      <!-- AÇÕES AO DESLIZAR -->
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="confirmDelete(activity.id)">
+          Delete
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

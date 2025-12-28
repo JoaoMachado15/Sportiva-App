@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> {{ isEdit ? 'Edit Activity' : 'Add Activity' }} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form">
+    <ion-item>
+      <ion-label position="stacked">Sport</ion-label>
+      <ion-input formControlName="sport"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Duration (minutes)</ion-label>
+      <ion-input type="number" formControlName="duration"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Date</ion-label>
+      <ion-datetime presentation="date" formControlName="date"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Location</ion-label>
+      <ion-input formControlName="location"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Intensity</ion-label>
+      <ion-select formControlName="intensity">
+        <ion-select-option value="low">Low</ion-select-option>
+        <ion-select-option value="moderate">Moderate</ion-select-option>
+        <ion-select-option value="high">High</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Notes</ion-label>
+      <ion-textarea formControlName="notes"></ion-textarea>
+    </ion-item>
+
+    <ion-button expand="block" (click)="submit()">
+      {{ isEdit ? 'Save Changes' : 'Save Activity' }}
+    </ion-button>
+  </form>
+</ion-content>
