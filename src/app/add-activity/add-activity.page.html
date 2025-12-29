@@ -1,31 +1,34 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/activities"></ion-back-button>
+    </ion-buttons>
+
     <ion-title> {{ isEdit ? 'Edit Activity' : 'Add Activity' }} </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <form [formGroup]="form">
+  <form [formGroup]="form" (ngSubmit)="submit()">
     <ion-item>
       <ion-label position="stacked">Sport</ion-label>
-      <ion-input formControlName="sport"></ion-input>
+      <ion-select formControlName="sport">
+        <ion-select-option *ngFor="let sport of sports" [value]="sport.value">
+          {{ sport.label }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
-
     <ion-item>
       <ion-label position="stacked">Duration (minutes)</ion-label>
       <ion-input type="number" formControlName="duration"></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label position="stacked">Date</ion-label>
       <ion-datetime presentation="date" formControlName="date"></ion-datetime>
     </ion-item>
-
     <ion-item>
       <ion-label position="stacked">Location</ion-label>
       <ion-input formControlName="location"></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label position="stacked">Intensity</ion-label>
       <ion-select formControlName="intensity">
@@ -34,14 +37,12 @@
         <ion-select-option value="high">High</ion-select-option>
       </ion-select>
     </ion-item>
-
     <ion-item>
       <ion-label position="stacked">Notes</ion-label>
       <ion-textarea formControlName="notes"></ion-textarea>
     </ion-item>
-
-    <ion-button expand="block" (click)="submit()">
+    <ion-button expand="block" type="submit">
       {{ isEdit ? 'Save Changes' : 'Save Activity' }}
     </ion-button>
-  </form>
-</ion-content>
+  </form></ion-content
+>

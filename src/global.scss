@@ -35,3 +35,21 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+
+
+.delete-toast {
+  --background: #ff0004;   // vermelho
+  --color: #ffffff;
+  --border-radius: 12px;
+  --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  font-weight: 600;
+}
+
+
+
+ion-toolbar {
+  --min-height: 80px;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+}

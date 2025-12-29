@@ -14,13 +14,15 @@ import {
   IonItemSliding,
   IonItemOptions,
   IonItemOption,
+  AlertController,
+  ToastController,
 } from '@ionic/angular/standalone';
-import { ActivitiesService } from '../services/activities.service';
-import { Activity } from '../models/activity.model';
-import { addIcons } from 'ionicons';
-import { trashOutline } from 'ionicons/icons';
 import { RouterModule } from '@angular/router';
-import { AlertController } from '@ionic/angular/standalone';
+import { ActivitiesService } from '../services/activities.service';
+import { Activity, SportType } from '../models/activity.model';
+import { SPORTS } from '../constants/sports.constants';
+import { addIcons } from 'ionicons';
+import { addCircleOutline } from 'ionicons/icons';
 
 @Component({
   standalone: true,
@@ -42,16 +44,24 @@ import { AlertController } from '@ionic/angular/standalone';
     IonItemSliding,
     IonItemOptions,
     IonItemOption,
+    
   ],
 })
 export class ActivitiesPage {
   activities: Activity[] = [];
 
+  // MAPPER CENTRAL
+  sportLabels: Record<SportType, string> = SPORTS.reduce(
+    (acc, s) => ({ ...acc, [s.value]: s.label }),
+    {} as Record<SportType, string>
+  );
+
   constructor(
     private service: ActivitiesService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController
   ) {
-    addIcons({ trashOutline });
+    addIcons({ addCircleOutline });
   }
 
   ngOnInit() {
@@ -60,21 +70,24 @@ export class ActivitiesPage {
     });
   }
 
-  async confirmDelete(id: string) {
+  async confirmDelete(
+    activityId: string,
+    sportLabel: string,
+    slidingItem: IonItemSliding
+  ) {
     const alert = await this.alertCtrl.create({
       header: 'Delete activity',
-      message: 'Are you sure you want to delete this activity?',
+      message: `Are you sure you want to delete?`,
       buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
+          handler: () => slidingItem.close(),
         },
         {
           text: 'Delete',
           role: 'destructive',
-          handler: () => {
-            this.service.delete(id);
-          },
+          handler: () => this.deleteActivity(activityId, slidingItem),
         },
       ],
     });
@@ -82,7 +95,20 @@ export class ActivitiesPage {
     await alert.present();
   }
 
-  toggleFavorite(id: string) {
-    this.service.toggleFavorite(id);
+  private async deleteActivity(
+    activityId: string,
+    slidingItem: IonItemSliding
+  ) {
+    this.service.delete(activityId);
+    slidingItem.close();
+
+    const toast = await this.toastCtrl.create({
+      message: 'Activity deleted',
+      duration: 1500,
+      position: 'top',
+      cssClass: 'delete-toast',
+    });
+
+    await toast.present();
   }
 }

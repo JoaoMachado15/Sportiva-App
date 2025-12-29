@@ -1,7 +1,6 @@
-import { Activity } from '../models/activity.model';
+import { CommonModule } from '@angular/common';
 
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -10,22 +9,28 @@ import {
   IonButton,
   IonItem,
   IonLabel,
-  IonInput,
   IonSelect,
   IonSelectOption,
   IonTextarea,
   IonDatetime,
+  IonInput,
+  IonBackButton,
+  IonButtons
 } from '@ionic/angular/standalone';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivitiesService } from '../services/activities.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuid } from 'uuid';
-import { ActivityIntensity } from '../models/activity.model';
+
+import { ActivitiesService } from '../services/activities.service';
+import { ActivityIntensity, SportType } from '../models/activity.model';
+import { SPORTS } from '../constants/sports.constants';
 
 @Component({
   standalone: true,
   selector: 'app-add-activity',
   templateUrl: './add-activity.page.html',
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     IonHeader,
     IonToolbar,
@@ -34,19 +39,23 @@ import { ActivityIntensity } from '../models/activity.model';
     IonButton,
     IonItem,
     IonLabel,
-    IonInput,
     IonSelect,
     IonSelectOption,
     IonTextarea,
     IonDatetime,
+    IonInput,
+    IonBackButton,
+    IonButtons
   ],
 })
 export class AddActivityPage {
+  sports = SPORTS;
+
   isEdit = false;
   activityId!: string;
 
   form = this.fb.nonNullable.group({
-    sport: ['', Validators.required],
+    sport: ['running' as SportType, Validators.required],
     duration: [0, Validators.required],
     date: ['', Validators.required],
     location: [''],
@@ -59,7 +68,9 @@ export class AddActivityPage {
     private service: ActivitiesService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
+  ) {}
+
+  ionViewWillEnter() {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
@@ -67,7 +78,6 @@ export class AddActivityPage {
       this.activityId = id;
 
       const activity = this.service.getById(id);
-
       if (activity) {
         this.form.patchValue(activity);
       }

@@ -1,13 +1,45 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>dashboard</ion-title>
+    <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">dashboard</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Total Activities</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ totalActivities }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Total Minutes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ totalMinutes }} min
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Favorites</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ favorites }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>This Month</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ thisMonth }} activities
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
