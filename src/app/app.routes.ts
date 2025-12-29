@@ -1,21 +1,35 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
+  // ---------- PUBLIC ----------
   {
-    path: '',
+    path: 'intro',
+    loadComponent: () =>
+      import('./pages/intro/intro.page').then(m => m.IntroPage),
+  },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/login/login.page').then(m => m.LoginPage),
+  },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./pages/register/register.page').then(m => m.RegisterPage),
+  },
+
+  // ---------- PRIVATE ----------
+  {
+    path: 'tabs',
+    canActivateChild: [AuthGuard], 
     loadChildren: () =>
       import('./tabs/tabs.routes').then(m => m.routes),
   },
+
+  // ---------- FALLBACK ----------
   {
-    path: 'add-activity',
-    loadComponent: () =>
-      import('./add-activity/add-activity.page')
-        .then(m => m.AddActivityPage),
-  },
-  {
-    path: 'edit-activity/:id',
-    loadComponent: () =>
-      import('./add-activity/add-activity.page')
-        .then(m => m.AddActivityPage),
+    path: '**',
+    redirectTo: 'login',
   },
 ];

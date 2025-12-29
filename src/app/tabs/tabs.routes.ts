@@ -3,7 +3,7 @@ import { TabsPage } from './tabs.page';
 
 export const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
@@ -25,6 +25,18 @@ export const routes: Routes = [
             .then(m => m.ActivityDetailsPage),
       },
       {
+        path: 'add-activity',
+        loadComponent: () =>
+          import('../add-activity/add-activity.page')
+            .then(m => m.AddActivityPage),
+      },
+      {
+        path: 'edit-activity/:id',
+        loadComponent: () =>
+          import('../add-activity/add-activity.page')
+            .then(m => m.AddActivityPage),
+      },
+      {
         path: 'statistics',
         loadComponent: () =>
           import('../statistics/statistics.page')
@@ -38,14 +50,9 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/dashboard',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
       },
     ],
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/dashboard',
-    pathMatch: 'full',
   },
 ];

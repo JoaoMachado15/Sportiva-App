@@ -1,0 +1,50 @@
+<ion-content fullscreen class="ion-padding login-page">
+  <div class="login-container">
+
+    <div class="header">
+      <h1>Welcome back</h1>
+      <p>Login to continue tracking your activities</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <ion-item fill="outline">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input
+          type="email"
+          placeholder="Email"
+          formControlName="email">
+        </ion-input>
+      </ion-item>
+
+      <ion-item fill="outline">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          type="password"
+          placeholder="Password"
+          formControlName="password">
+        </ion-input>
+      </ion-item>
+
+      <ion-button
+        expand="block"
+        type="submit"
+        [disabled]="form.invalid || loading"
+        
+        >
+
+        <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+        <span *ngIf="!loading">Login</span>
+
+      </ion-button>
+    </form>
+
+    <div class="footer">
+      <p>
+        Don’t have an account?
+        <a (click)="goToRegister()">Create one</a>
+      </p>
+    </div>
+
+  </div>
+</ion-content>

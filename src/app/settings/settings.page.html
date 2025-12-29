@@ -16,5 +16,16 @@
       [checked]="darkMode"
       (ionChange)="toggleTheme($event)">
     </ion-toggle>
+
+  </ion-item>
+
+  <!-- LOGOUT -->
+  <ion-item lines="none">
+    <ion-button
+      expand="block"
+      color="danger"
+      (click)="logout()">
+      Logout
+    </ion-button>
   </ion-item>
 </ion-content>

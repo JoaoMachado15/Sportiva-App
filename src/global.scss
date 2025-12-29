@@ -1,3 +1,5 @@
+@use 'swiper/css';
+@use 'swiper/css/pagination';
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -36,7 +38,14 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
+
+
+
+
+
+
 body.dark {
+
   --ion-background-color: #0f172a;
   --ion-text-color: #e5e7eb;
 
