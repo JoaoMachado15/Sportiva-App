@@ -9,9 +9,14 @@ import {
   IonLabel,
   IonBackButton,
   IonButtons,
+  AlertController,
+  ToastController,
+
 } from '@ionic/angular/standalone';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+
+
 
 import { ActivitiesService } from '../services/activities.service';
 import { Activity } from '../models/activity.model';
@@ -36,6 +41,7 @@ import { SPORTS } from '../constants/sports.constants';
     IonButtons,
   ],
 })
+
 export class ActivityDetailsPage {
   activity?: Activity;
 
@@ -46,8 +52,13 @@ export class ActivityDetailsPage {
 
   constructor(
     private route: ActivatedRoute,
-    private service: ActivitiesService
-  ) {}
+    private service: ActivitiesService,
+    private router: Router,
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController
+  ) {
+   
+  }
 
   ionViewWillEnter() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -55,4 +66,52 @@ export class ActivityDetailsPage {
       this.activity = this.service.getById(id);
     }
   }
+
+  // EDIT
+  editActivity() {
+    if (!this.activity) return;
+    this.router.navigate(['/edit-activity', this.activity.id]);
+  }
+
+  // DELETE (CONFIRM)
+  async confirmDelete() {
+    if (!this.activity) return;
+
+    const alert = await this.alertCtrl.create({
+      header: 'Delete activity',
+      message: `Are you sure you want to delete?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Delete',
+          role: 'destructive',
+          handler: () => this.deleteActivity(),
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  private async deleteActivity() {
+    if (!this.activity) return;
+
+    this.service.delete(this.activity.id);
+
+    const toast = await this.toastCtrl.create({
+      message: 'Activity deleted',
+      duration: 2000,
+      position: 'bottom',
+      cssClass: 'delete-toast',
+    });
+
+    await toast.present();
+
+    // volta à lista
+    this.router.navigateByUrl('/tabs/activities');
+  }
 }
+

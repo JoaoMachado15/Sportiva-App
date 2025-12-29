@@ -11,29 +11,51 @@
 </ion-header>
 
 <ion-content>
+  <!-- FILTER -->
+  <ion-segment
+    value="all"
+    (ionChange)="onFilterChange($event)"
+    class="activity-filter"
+  >
+    <ion-segment-button value="all">
+      <ion-label>All</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="favorites">
+      <ion-label>Favorites</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
   <ion-list>
-    <ion-item-sliding #sliding *ngFor="let activity of activities">
-      <ion-item button detail [routerLink]="['/tabs/activity', activity.id]">
+    <ion-item-sliding #sliding *ngFor="let activity of filteredActivities">
+      <ion-item button detail (click)="openDetails(activity.id)">
+        <!-- FAVORITE -->
+        <ion-button
+          slot="start"
+          fill="clear"
+          (click)="toggleFavorite(activity.id, $event)"
+        >
+          <ion-icon [name]="activity.favorite ? 'star' : 'star-outline'">
+          </ion-icon>
+        </ion-button>
+
         <ion-label>
           <h2>{{ sportLabels[activity.sport] }}</h2>
           <p>{{ activity.duration }} min • {{ activity.date }}</p>
         </ion-label>
 
+        <!-- EDIT -->
         <ion-button
           slot="end"
           fill="clear"
-          (click)="$event.stopPropagation()"
-          [routerLink]="['/edit-activity', activity.id]"
+          (click)="editActivity(activity.id, $event)"
         >
           Edit
         </ion-button>
       </ion-item>
 
       <ion-item-options side="end">
-        <ion-item-option
-          color="danger"
-          (click)="confirmDelete(activity.id, sportLabels[activity.sport], sliding)"
-        >
+        <ion-item-option color="danger" (click)="confirmDelete(activity.id)">
           Delete
         </ion-item-option>
       </ion-item-options>

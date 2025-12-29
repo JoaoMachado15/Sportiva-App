@@ -1,18 +1,25 @@
 <ion-header>
   <ion-toolbar>
-
+    <!-- BACK -->
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/activities"></ion-back-button>
     </ion-buttons>
+
     <ion-title>Activity Details</ion-title>
 
-    
+    <!-- ACTIONS -->
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="editActivity()"> Edit </ion-button>
+
+      <ion-button fill="clear" color="danger" (click)="confirmDelete()">
+        Delete
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="activity">
   <ion-list>
-
     <ion-item>
       <ion-label>
         <h2>Sport</h2>
@@ -48,15 +55,11 @@
       </ion-label>
     </ion-item>
 
-    <ion-item *ngIf="activity.notes">
+    <ion-item *ngIf="activity.notes?.trim()">
       <ion-label>
         <h2>Notes</h2>
         <p>{{ activity.notes }}</p>
       </ion-label>
     </ion-item>
-
   </ion-list>
-
-
 </ion-content>
-
