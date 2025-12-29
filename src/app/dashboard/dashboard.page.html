@@ -6,39 +6,61 @@
 
 <ion-content>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Total Activities</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      {{ totalActivities }}
-    </ion-card-content>
-  </ion-card>
+  <!-- SUMMARY CARDS -->
+  <ion-grid>
+    <ion-row>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Total Minutes</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      {{ totalMinutes }} min
-    </ion-card-content>
-  </ion-card>
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content>
+            <ion-text color="medium">Activities</ion-text>
+            <h2>{{ totalActivities }}</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Favorites</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      {{ favorites }}
-    </ion-card-content>
-  </ion-card>
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content>
+            <ion-text color="medium">Favorites</ion-text>
+            <h2>{{ totalFavorites }}</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
 
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content>
+            <ion-text color="medium">Total Time</ion-text>
+            <h2>{{ totalHours }} h</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content>
+            <ion-text color="medium">Average / Activity</ion-text>
+            <h2>
+              {{
+                totalActivities
+                  ? (totalMinutes / totalActivities).toFixed(0)
+                  : 0
+              }} min
+            </h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <!-- CHART -->
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>This Month</ion-card-title>
-    </ion-card-header>
     <ion-card-content>
-      {{ thisMonth }} activities
+      <ion-text color="medium">Activities by Sport</ion-text>
+
+      <canvas #sportChart></canvas>
     </ion-card-content>
   </ion-card>
 

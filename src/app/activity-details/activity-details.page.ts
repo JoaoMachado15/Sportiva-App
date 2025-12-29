@@ -9,20 +9,22 @@ import {
   IonLabel,
   IonBackButton,
   IonButtons,
+  IonButton,
   AlertController,
   ToastController,
-
+  IonSegment,
+  IonSegmentButton,
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-
-
 import { ActivitiesService } from '../services/activities.service';
 import { Activity } from '../models/activity.model';
-import { SPORTS } from '../constants/sports.constants';
-
-
+import { SPORT_LABELS } from '../utils/sports-labels.util';
+import {
+  confirmDeleteAction,
+  showDeleteToast,
+} from '../utils/activity-actions.util';
 
 @Component({
   standalone: true,
@@ -39,16 +41,12 @@ import { SPORTS } from '../constants/sports.constants';
     IonLabel,
     IonBackButton,
     IonButtons,
+    IonButton,
   ],
 })
-
 export class ActivityDetailsPage {
   activity?: Activity;
-
-  sportLabels = SPORTS.reduce(
-    (acc, s) => ({ ...acc, [s.value]: s.label }),
-    {} as Record<string, string>
-  );
+  sportLabels = SPORT_LABELS;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,9 +54,7 @@ export class ActivityDetailsPage {
     private router: Router,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController
-  ) {
-   
-  }
+  ) {}
 
   ionViewWillEnter() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -67,51 +63,18 @@ export class ActivityDetailsPage {
     }
   }
 
-  // EDIT
   editActivity() {
     if (!this.activity) return;
     this.router.navigate(['/edit-activity', this.activity.id]);
   }
 
-  // DELETE (CONFIRM)
   async confirmDelete() {
     if (!this.activity) return;
 
-    const alert = await this.alertCtrl.create({
-      header: 'Delete activity',
-      message: `Are you sure you want to delete?`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-        {
-          text: 'Delete',
-          role: 'destructive',
-          handler: () => this.deleteActivity(),
-        },
-      ],
+    await confirmDeleteAction(this.alertCtrl, async () => {
+      this.service.delete(this.activity!.id);
+      await showDeleteToast(this.toastCtrl);
+      this.router.navigateByUrl('/tabs/activities');
     });
-
-    await alert.present();
-  }
-
-  private async deleteActivity() {
-    if (!this.activity) return;
-
-    this.service.delete(this.activity.id);
-
-    const toast = await this.toastCtrl.create({
-      message: 'Activity deleted',
-      duration: 2000,
-      position: 'bottom',
-      cssClass: 'delete-toast',
-    });
-
-    await toast.present();
-
-    // volta à lista
-    this.router.navigateByUrl('/tabs/activities');
   }
 }
-

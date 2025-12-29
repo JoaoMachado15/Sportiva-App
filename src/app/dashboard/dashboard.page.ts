@@ -1,22 +1,37 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import {
   IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
   IonCard,
-  IonCardHeader,
-  IonCardTitle,
   IonCardContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonText,
 } from '@ionic/angular/standalone';
-import { CommonModule } from '@angular/common';
+
 import { ActivitiesService } from '../services/activities.service';
-import { Activity } from '../models/activity.model';
+import { Activity, SportType } from '../models/activity.model';
+import { SPORTS } from '../constants/sports.constants';
+
+import {
+  getTotalActivities,
+  getTotalFavorites,
+  getTotalMinutes,
+  getAverageMinutes,
+} from './dashboard-metrics.util';
+
+import { buildSportChart } from './dashboard-chart.util';
+import Chart from 'chart.js/auto';
 
 @Component({
   standalone: true,
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
+  styleUrls: ['./dashboard.page.scss'],
   imports: [
     CommonModule,
     IonContent,
@@ -24,45 +39,62 @@ import { Activity } from '../models/activity.model';
     IonTitle,
     IonToolbar,
     IonCard,
-    IonCardHeader,
-    IonCardTitle,
     IonCardContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonText,
   ],
 })
 export class DashboardPage {
-  totalActivities = 0;
-  totalMinutes = 0;
-  favorites = 0;
-  thisMonth = 0;
+  @ViewChild('sportChart') chartRef!: ElementRef<HTMLCanvasElement>;
+
+  activities: Activity[] = [];
+  chart?: Chart;
+
+  sportLabels: Record<SportType, string> = SPORTS.reduce(
+    (acc, s) => ({ ...acc, [s.value]: s.label }),
+    {} as Record<SportType, string>
+  );
 
   constructor(private service: ActivitiesService) {}
 
-  ngOnInit() {
-    this.service.activities.subscribe((activities) => {
-      this.calculateSummary(activities);
+  ionViewWillEnter() {
+    this.service.activities.subscribe(data => {
+      this.activities = data;
+
+      setTimeout(() => {
+        if (this.chartRef) {
+          this.chart = buildSportChart(
+            this.chartRef.nativeElement,
+            this.activities,
+            this.sportLabels,
+            this.chart
+          );
+        }
+      }, 0);
     });
   }
 
-  private calculateSummary(activities: Activity[]) {
-    this.totalActivities = activities.length;
+  // === METRICS (delegadas) ===
 
-    this.totalMinutes = activities.reduce(
-      (sum, a) => sum + a.duration,
-      0
-    );
+  get totalActivities() {
+    return getTotalActivities(this.activities);
+  }
 
-    this.favorites = activities.filter(a => a.favorite).length;
+  get totalFavorites() {
+    return getTotalFavorites(this.activities);
+  }
 
-    const now = new Date();
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
+  get totalMinutes() {
+    return getTotalMinutes(this.activities);
+  }
 
-    this.thisMonth = activities.filter(a => {
-      const date = new Date(a.date);
-      return (
-        date.getMonth() === currentMonth &&
-        date.getFullYear() === currentYear
-      );
-    }).length;
+  get totalHours() {
+    return (this.totalMinutes / 60).toFixed(1);
+  }
+
+  get averageMinutes() {
+    return getAverageMinutes(this.activities);
   }
 }
