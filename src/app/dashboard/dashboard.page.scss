@@ -1,13 +1,79 @@
-ion-card {
-  border-radius: 14px;
+.kpi-card {
+  text-align: center;
+
+  ion-text {
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+
+  h2 {
+    margin: 6px 0 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
 }
 
-ion-card-content h2 {
-  margin-top: 6px;
-  font-size: 1.6rem;
+.kpi-card.primary {
+  border-left: 4px solid var(--ion-text-color);
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.chart-wrapper {
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 32px 16px;
+  
+
+  p {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--ion-text-color);
+  }
+}
+
+
+.section-title {
   font-weight: 600;
+  display: block;
+  margin-bottom: 12px;
 }
 
-canvas {
-  margin-top: 16px;
+.weekly-progress {
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 6px;
+
+    .goal {
+      color: var(--ion-color-medium);
+    }
+  }
+
+  .progress-bar {
+    height: 10px;
+    background: var(--ion-color-light);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      var(--ion-color-primary),
+      var(--ion-color-success)
+    );
+    transition: width 0.3s ease;
+  }
 }

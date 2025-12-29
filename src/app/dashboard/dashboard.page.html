@@ -5,63 +5,105 @@
 </ion-header>
 
 <ion-content>
+  <!-- EMPTY STATE -->
+  <ion-card *ngIf="!activities.length">
+    <ion-card-content class="empty-state">
+      <ion-text color="danger"> No activities yet. </ion-text>
+      <p>Add your first activity to see statistics.</p>
+    </ion-card-content>
+  </ion-card>
 
-  <!-- SUMMARY CARDS -->
-  <ion-grid>
+  <!-- KPI SUMMARY -->
+  <ion-grid *ngIf="activities.length">
     <ion-row>
-
+      <!-- TOTAL ACTIVITIES -->
       <ion-col size="6">
-        <ion-card>
+        <ion-card class="kpi-card primary">
           <ion-card-content>
-            <ion-text color="medium">Activities</ion-text>
+            <ion-text>Total activities</ion-text>
             <h2>{{ totalActivities }}</h2>
           </ion-card-content>
         </ion-card>
       </ion-col>
 
+      <!-- FAVORITES -->
       <ion-col size="6">
-        <ion-card>
+        <ion-card class="kpi-card">
           <ion-card-content>
-            <ion-text color="medium">Favorites</ion-text>
+            <ion-text>Favorites</ion-text>
             <h2>{{ totalFavorites }}</h2>
           </ion-card-content>
         </ion-card>
       </ion-col>
 
+      <!-- TOTAL TIME -->
       <ion-col size="6">
-        <ion-card>
+        <ion-card class="kpi-card">
           <ion-card-content>
-            <ion-text color="medium">Total Time</ion-text>
+            <ion-text>Total time</ion-text>
             <h2>{{ totalHours }} h</h2>
           </ion-card-content>
         </ion-card>
       </ion-col>
 
+      <!-- AVERAGE -->
       <ion-col size="6">
-        <ion-card>
+        <ion-card class="kpi-card">
           <ion-card-content>
-            <ion-text color="medium">Average / Activity</ion-text>
-            <h2>
-              {{
-                totalActivities
-                  ? (totalMinutes / totalActivities).toFixed(0)
-                  : 0
-              }} min
-            </h2>
+            <ion-text>Avg / activity</ion-text>
+            <h2>{{ averageMinutes }} min</h2>
           </ion-card-content>
         </ion-card>
       </ion-col>
 
+      <ion-col size="6">
+        <ion-card class="kpi-card">
+          <ion-card-content>
+            <ion-text color="medium">Most practiced</ion-text>
+            <h2>{{ mostPracticedSport }}</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <!-- WEEKLY PROGRESS -->
+      <ion-card *ngIf="activities.length">
+        <ion-card-content>
+          <ion-text class="section-title"> Weekly progress </ion-text>
+
+          <div class="weekly-progress">
+            <div class="progress-header">
+              <span>{{ weeklyMinutes }} min</span>
+              <span class="goal">{{ weeklyGoalMinutes }} min goal</span>
+            </div>
+
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="weeklyProgress"></div>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
     </ion-row>
   </ion-grid>
 
   <!-- CHART -->
-  <ion-card>
+  <ion-card *ngIf="activities.length">
     <ion-card-content>
-      <ion-text color="medium">Activities by Sport</ion-text>
+      <ion-text class="section-title"> Activities by sport </ion-text>
 
-      <canvas #sportChart></canvas>
+      <div class="chart-wrapper">
+        <canvas #sportChart></canvas>
+      </div>
     </ion-card-content>
   </ion-card>
 
+  <!-- TIME BY SPORT -->
+  <ion-card *ngIf="activities.length">
+    <ion-card-content>
+      <ion-text class="section-title"> Time by sport </ion-text>
+
+      <div class="chart-wrapper">
+        <canvas #sportTimeChart></canvas>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

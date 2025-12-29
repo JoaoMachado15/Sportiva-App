@@ -2,6 +2,7 @@ import { Component, EnvironmentInjector, inject } from '@angular/core';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { homeSharp, listSharp, settingsSharp, statsChartSharp } from 'ionicons/icons';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-tabs',
@@ -12,7 +13,9 @@ import { homeSharp, listSharp, settingsSharp, statsChartSharp } from 'ionicons/i
 export class TabsPage {
   public environmentInjector = inject(EnvironmentInjector);
 
-  constructor() {
+  constructor(private themeService: ThemeService) {
     addIcons({ homeSharp, listSharp, statsChartSharp, settingsSharp });
   }
+
+
 }

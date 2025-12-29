@@ -36,14 +36,22 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
+body.dark {
+  --ion-background-color: #0f172a;
+  --ion-text-color: #e5e7eb;
 
+  --ion-card-background: #020617;
+  --ion-item-background: transparent;
 
-.delete-toast {
-  --background: #ff0004;   // vermelho
-  --color: #ffffff;
-  --border-radius: 12px;
-  --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  font-weight: 600;
+  --ion-toolbar-background: #020617;
+  --ion-toolbar-color: #e5e7eb;
+
+  --ion-color-primary: #60a5fa;
+  --ion-color-success: #4ade80;
+  --ion-color-danger: #f87171;
+  --ion-color-medium: #94a3b8;
+
+  --ion-border-color: #1e293b;
 }
 
 
@@ -52,4 +60,32 @@ ion-toolbar {
   --min-height: 80px;
   --padding-top: 20px;
   --padding-bottom: 20px;
+  
 }
+
+/* TOAST */
+.delete-toast {
+  --background: var(--ion-color-danger);
+  --color: #fff;
+  --border-radius: 12px;
+  font-weight: 600;
+}
+
+.activity-filter {
+  margin-top: 16px;
+  margin-bottom: 16px;
+
+  --background: var(--ion-card-background);
+  --border-radius: 14px;
+  --padding: 5px;
+
+  --indicator-color: var(--ion-text-color);
+  --indicator-border-radius: 10px;
+
+  ion-segment-button {
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+}
+
