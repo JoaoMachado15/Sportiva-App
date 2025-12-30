@@ -19,13 +19,20 @@ import {
   ToastController,
   IonSegment,
   IonSegmentButton,
+  IonSelect,
+  IonSelectOption,
 } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 
 import { ActivitiesService } from '../services/activities.service';
-import { Activity } from '../models/activity.model';
+import { Activity, SportType } from '../models/activity.model';
 import { SPORT_LABELS } from '../utils/sports-labels.util';
-import { filterActivities, ActivityFilter } from './activities.utils';
+import {
+  filterActivities,
+  ActivityFilter,
+  sortActivities,
+  ActivitySort,
+} from './activities.utils';
 import {
   confirmDeleteAction,
   showDeleteToast,
@@ -56,11 +63,17 @@ import { addCircleOutline, star, starOutline } from 'ionicons/icons';
     IonItemOption,
     IonSegment,
     IonSegmentButton,
+    IonSelect,
+    IonSelectOption,
   ],
 })
 export class ActivitiesPage {
   activities: Activity[] = [];
   filter: ActivityFilter = 'all';
+  sort: ActivitySort = 'date-desc';
+  selectedSport?: string;
+
+  sports = Object.keys(SPORT_LABELS) as SportType[];
 
   sportLabels = SPORT_LABELS;
 
@@ -87,7 +100,7 @@ export class ActivitiesPage {
 
   editActivity(id: string, event: Event) {
     event.stopPropagation();
-    this.router.navigate(['/edit-activity', id]);
+    this.router.navigate(['/tabs/edit-activity', id]);
   }
 
   toggleFavorite(id: string, event: Event) {
@@ -107,10 +120,27 @@ export class ActivitiesPage {
   // ===== FILTER =====
 
   get filteredActivities(): Activity[] {
-    return filterActivities(this.activities, this.filter);
+    const filtered = filterActivities(
+      this.activities,
+      this.filter,
+      this.selectedSport
+    );
+
+    return sortActivities(filtered, this.sort);
   }
 
   onFilterChange(event: any) {
     this.filter = event.detail.value;
+    if (this.filter !== 'sport') {
+      this.selectedSport = undefined;
+    }
+  }
+
+  onSortChange(event: any) {
+    this.sort = event.detail.value;
+  }
+
+  onSportChange(event: any) {
+    this.selectedSport = event.detail.value;
   }
 }

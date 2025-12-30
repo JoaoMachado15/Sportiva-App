@@ -22,9 +22,19 @@
       <ion-input type="number" formControlName="duration"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Date</ion-label>
-      <ion-datetime presentation="date" formControlName="date"></ion-datetime>
+      <ion-label position="stacked">Date & time</ion-label>
+
+      <ion-datetime
+        formControlName="date"
+        presentation="date-time"
+        locale="en-US"
+        hour-cycle="h12"
+        show-default-buttons="true"
+        [value]="form.controls.date.value"
+      >
+      </ion-datetime>
     </ion-item>
+
     <ion-item>
       <ion-label position="stacked">Location</ion-label>
       <ion-input formControlName="location"></ion-input>

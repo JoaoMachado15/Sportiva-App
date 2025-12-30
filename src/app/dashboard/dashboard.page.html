@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content>
+
   <!-- EMPTY STATE -->
   <ion-card *ngIf="!activities.length">
     <ion-card-content class="empty-state">
@@ -16,7 +17,7 @@
   <!-- KPI SUMMARY -->
   <ion-grid *ngIf="activities.length">
     <ion-row>
-      <!-- TOTAL ACTIVITIES -->
+
       <ion-col size="6">
         <ion-card class="kpi-card primary">
           <ion-card-content>
@@ -26,7 +27,6 @@
         </ion-card>
       </ion-col>
 
-      <!-- FAVORITES -->
       <ion-col size="6">
         <ion-card class="kpi-card">
           <ion-card-content>
@@ -36,7 +36,6 @@
         </ion-card>
       </ion-col>
 
-      <!-- TOTAL TIME -->
       <ion-col size="6">
         <ion-card class="kpi-card">
           <ion-card-content>
@@ -46,7 +45,6 @@
         </ion-card>
       </ion-col>
 
-      <!-- AVERAGE -->
       <ion-col size="6">
         <ion-card class="kpi-card">
           <ion-card-content>
@@ -66,7 +64,7 @@
       </ion-col>
 
       <!-- WEEKLY PROGRESS -->
-      <ion-card *ngIf="activities.length">
+      <ion-card>
         <ion-card-content>
           <ion-text class="section-title"> Weekly progress </ion-text>
 
@@ -77,15 +75,19 @@
             </div>
 
             <div class="progress-bar">
-              <div class="progress-fill" [style.width.%]="weeklyProgress"></div>
+              <div
+                class="progress-fill"
+                [style.width.%]="weeklyProgress">
+              </div>
             </div>
           </div>
         </ion-card-content>
       </ion-card>
+
     </ion-row>
   </ion-grid>
 
-  <!-- CHART -->
+  <!-- ACTIVITIES BY SPORT -->
   <ion-card *ngIf="activities.length">
     <ion-card-content>
       <ion-text class="section-title"> Activities by sport </ion-text>
@@ -96,14 +98,4 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- TIME BY SPORT -->
-  <ion-card *ngIf="activities.length">
-    <ion-card-content>
-      <ion-text class="section-title"> Time by sport </ion-text>
-
-      <div class="chart-wrapper">
-        <canvas #sportTimeChart></canvas>
-      </div>
-    </ion-card-content>
-  </ion-card>
 </ion-content>

@@ -11,10 +11,10 @@
 </ion-header>
 
 <ion-content>
-  <!-- FILTER -->
+
+  <!-- FILTER SEGMENT -->
   <ion-segment
-   
-    value="all"
+    [value]="filter"
     (ionChange)="onFilterChange($event)"
     class="activity-filter"
   >
@@ -25,24 +25,77 @@
     <ion-segment-button value="favorites">
       <ion-label>Favorites</ion-label>
     </ion-segment-button>
+
+    <ion-segment-button value="sport">
+      <ion-label>Sport</ion-label>
+    </ion-segment-button>
   </ion-segment>
 
+  <!-- SORT -->
+  <ion-item>
+    <ion-label>Sort by</ion-label>
+    <ion-select
+      interface="popover"
+      [value]="sort"
+      (ionChange)="onSortChange($event)"
+    >
+      <ion-select-option value="date-desc">
+        Date (newest)
+      </ion-select-option>
+
+      <ion-select-option value="date-asc">
+        Date (oldest)
+      </ion-select-option>
+
+      <ion-select-option value="intensity">
+        Intensity
+      </ion-select-option>
+
+      <ion-select-option value="duration">
+        Duration
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- SPORT FILTER -->
+  <ion-item *ngIf="filter === 'sport'">
+    <ion-label>Sport</ion-label>
+    <ion-select
+      interface="popover"
+      placeholder="Select sport"
+      [value]="selectedSport"
+      (ionChange)="onSportChange($event)"
+    >
+      <ion-select-option
+        *ngFor="let sport of sports"
+        [value]="sport"
+      >
+        {{ sportLabels[sport] }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- LIST -->
   <ion-list>
-    <ion-item-sliding #sliding *ngFor="let activity of filteredActivities">
+    <ion-item-sliding *ngFor="let activity of filteredActivities">
       <ion-item button detail (click)="openDetails(activity.id)">
+
         <!-- FAVORITE -->
         <ion-button
           slot="start"
           fill="clear"
           (click)="toggleFavorite(activity.id, $event)"
         >
-          <ion-icon [name]="activity.favorite ? 'star' : 'star-outline'">
+          <ion-icon
+            [name]="activity.favorite ? 'star' : 'star-outline'">
           </ion-icon>
         </ion-button>
 
         <ion-label>
           <h2>{{ sportLabels[activity.sport] }}</h2>
-          <p>{{ activity.duration }} min • {{ activity.date }}</p>
+          <p>
+            {{ activity.duration }} min • {{ activity.date }}
+          </p>
         </ion-label>
 
         <!-- EDIT -->
@@ -53,13 +106,18 @@
         >
           Edit
         </ion-button>
+
       </ion-item>
 
       <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="confirmDelete(activity.id)">
+        <ion-item-option
+          color="danger"
+          (click)="confirmDelete(activity.id)"
+        >
           Delete
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
 </ion-content>

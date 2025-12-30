@@ -8,8 +8,14 @@
 
 
 ion-datetime {
-  --wheel-highlight-background: rgba(0, 122, 255, 0.18);
-  --wheel-fade-background-rgb: 255, 255, 255;
+  margin-top: 6px;
+  border-radius: 14px;
 
+  --background: var(--ion-card-background);
+  --color: var(--ion-text-color);
 
+  --wheel-highlight-background: rgba(59, 130, 246, 0.15);
+  --wheel-fade-background-rgb: 248, 250, 252;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }

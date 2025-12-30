@@ -5,7 +5,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-item lines="full">
+
+  <!-- ===== APPEARANCE ===== -->
+  <ion-list-header>
+    <ion-label>Appearance</ion-label>
+  </ion-list-header>
+
+  <ion-item>
     <ion-label>
       <h2>Dark mode</h2>
       <p>Reduce eye strain</p>
@@ -16,7 +22,20 @@
       [checked]="darkMode"
       (ionChange)="toggleTheme($event)">
     </ion-toggle>
+  </ion-item>
 
+
+
+  <!-- ===== ACCOUNT ===== -->
+  <ion-list-header>
+    <ion-label>Account</ion-label>
+  </ion-list-header>
+
+  <ion-item lines="none">
+    <ion-label>
+      <h2>Email</h2>
+      <p>{{ userEmail }}</p>
+    </ion-label>
   </ion-item>
 
   <!-- LOGOUT -->
@@ -28,4 +47,17 @@
       Logout
     </ion-button>
   </ion-item>
+
+  <!-- ===== APP ===== -->
+  <ion-list-header>
+    <ion-label>App</ion-label>
+  </ion-list-header>
+
+  <ion-item lines="none">
+    <ion-label>
+      <h2>Version</h2>
+      <p>1.0.0</p>
+    </ion-label>
+  </ion-item>
+
 </ion-content>

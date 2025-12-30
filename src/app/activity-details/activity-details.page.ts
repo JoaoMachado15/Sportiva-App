@@ -65,7 +65,7 @@ export class ActivityDetailsPage {
 
   editActivity() {
     if (!this.activity) return;
-    this.router.navigate(['/edit-activity', this.activity.id]);
+    this.router.navigate(['/tabs/edit-activity', this.activity.id]);
   }
 
   async confirmDelete() {

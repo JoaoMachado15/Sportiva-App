@@ -11,6 +11,7 @@ import {
   IonRow,
   IonCol,
   IonText,
+
 } from '@ionic/angular/standalone';
 
 import { ActivitiesService } from '../services/activities.service';
@@ -23,10 +24,13 @@ import {
   getMostPracticedSport,
 } from '../utils/activity-metrics.util';
 
+import { filterActivitiesByPeriod } from '../utils/activity-period.util';
 import { buildSportTimeChart } from '../dashboard/dashboard-chart.util';
 import { buildActivitiesByMonthChart } from '../utils/statistics-chart.util';
 
 import Chart from 'chart.js/auto';
+
+type StatsPeriod = 'week' | 'month';
 
 @Component({
   standalone: true,
@@ -45,6 +49,7 @@ import Chart from 'chart.js/auto';
     IonRow,
     IonCol,
     IonText,
+
   ],
 })
 export class StatisticsPage {
@@ -52,6 +57,7 @@ export class StatisticsPage {
   @ViewChild('monthChart') monthChartRef!: ElementRef<HTMLCanvasElement>;
 
   activities: Activity[] = [];
+  period: StatsPeriod = 'week';
 
   timeChart?: Chart;
   monthChart?: Chart;
@@ -66,40 +72,51 @@ export class StatisticsPage {
   ionViewWillEnter() {
     this.service.activities.subscribe((data) => {
       this.activities = data;
-
-      setTimeout(() => {
-        if (this.timeChartRef) {
-          this.timeChart = buildSportTimeChart(
-            this.timeChartRef.nativeElement,
-            this.activities,
-            this.sportLabels,
-            this.timeChart
-          );
-        }
-
-        if (this.monthChartRef) {
-          this.monthChart = buildActivitiesByMonthChart(
-            this.monthChartRef.nativeElement,
-            this.activities,
-            this.monthChart
-          );
-        }
-      });
+      setTimeout(() => this.buildCharts());
     });
   }
 
-  // ===== KPIs =====
+  onPeriodChange(event: any) {
+    this.period = event.detail.value;
+    setTimeout(() => this.buildCharts());
+  }
 
+  // ===== FILTERED ACTIVITIES =====
+  get periodActivities(): Activity[] {
+    return filterActivitiesByPeriod(this.activities, this.period);
+  }
+
+  // ===== CHARTS =====
+  private buildCharts() {
+    if (this.timeChartRef) {
+      this.timeChart = buildSportTimeChart(
+        this.timeChartRef.nativeElement,
+        this.periodActivities,
+        this.sportLabels,
+        this.timeChart
+      );
+    }
+
+    if (this.monthChartRef) {
+      this.monthChart = buildActivitiesByMonthChart(
+        this.monthChartRef.nativeElement,
+        this.periodActivities,
+        this.monthChart
+      );
+    }
+  }
+
+  // ===== KPIs =====
   get totalActivities(): number {
-    return getTotalActivities(this.activities);
+    return getTotalActivities(this.periodActivities);
   }
 
   get totalHours(): string {
-    return (getTotalMinutes(this.activities) / 60).toFixed(1);
+    return (getTotalMinutes(this.periodActivities) / 60).toFixed(1);
   }
 
   get mostPracticedSport(): string {
-    const sport = getMostPracticedSport(this.activities);
+    const sport = getMostPracticedSport(this.periodActivities);
     return sport ? this.sportLabels[sport] : '—';
   }
 }

@@ -15,7 +15,7 @@ import {
   IonDatetime,
   IonInput,
   IonBackButton,
-  IonButtons
+  IonButtons,
 } from '@ionic/angular/standalone';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -45,7 +45,7 @@ import { SPORTS } from '../constants/sports.constants';
     IonDatetime,
     IonInput,
     IonBackButton,
-    IonButtons
+    IonButtons,
   ],
 })
 export class AddActivityPage {
@@ -57,7 +57,7 @@ export class AddActivityPage {
   form = this.fb.nonNullable.group({
     sport: ['running' as SportType, Validators.required],
     duration: [0, Validators.required],
-    date: ['', Validators.required],
+    date: [new Date().toISOString(), Validators.required],
     location: [''],
     intensity: ['moderate' as ActivityIntensity, Validators.required],
     notes: [''],

@@ -26,8 +26,7 @@ import {
   getWeeklyMinutes,
 } from '../utils/activity-metrics.util';
 
-import { buildSportChart, buildSportTimeChart } from './dashboard-chart.util';
-
+import { buildSportChart } from './dashboard-chart.util';
 import Chart from 'chart.js/auto';
 
 @Component({
@@ -50,19 +49,12 @@ import Chart from 'chart.js/auto';
   ],
 })
 export class DashboardPage {
-  // ===== CHART REFS =====
   @ViewChild('sportChart')
   sportChartRef!: ElementRef<HTMLCanvasElement>;
 
-  @ViewChild('sportTimeChart')
-  timeChartRef!: ElementRef<HTMLCanvasElement>;
-
   activities: Activity[] = [];
-
   sportChart?: Chart;
-  timeChart?: Chart;
 
-  // labels centralizados
   sportLabels: Record<SportType, string> = SPORTS.reduce(
     (acc, s) => ({ ...acc, [s.value]: s.label }),
     {} as Record<SportType, string>
@@ -83,21 +75,11 @@ export class DashboardPage {
             this.sportChart
           );
         }
-
-        if (this.timeChartRef) {
-          this.timeChart = buildSportTimeChart(
-            this.timeChartRef.nativeElement,
-            this.activities,
-            this.sportLabels,
-            this.timeChart
-          );
-        }
       });
     });
   }
 
   // ===== KPI METRICS =====
-
   get totalActivities(): number {
     return getTotalActivities(this.activities);
   }
@@ -124,7 +106,7 @@ export class DashboardPage {
   }
 
   // ===== WEEKLY PROGRESS =====
-  weeklyGoalMinutes = 300; // 5h
+  weeklyGoalMinutes = 300;
 
   get weeklyMinutes(): number {
     return getWeeklyMinutes(this.activities);
