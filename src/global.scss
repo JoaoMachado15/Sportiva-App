@@ -42,14 +42,19 @@ body {
   color: var(--color-text);
   margin: 0;
 
-  /* Ionic bridge (LIGHT) */
+  /* 🔥 Ionic bridge (LIGHT) */
   --ion-background-color: var(--color-bg);
   --ion-text-color: var(--color-text);
   --ion-item-background: var(--color-bg);
   --ion-card-background: var(--color-bg);
 }
 
-/* Ion content must follow theme */
+/* Impedir browser de forçar dark mode */
+html {
+  color-scheme: light;
+}
+
+/* Ion content deve seguir o tema */
 ion-content {
   --background: var(--ion-background-color);
 }
@@ -63,7 +68,7 @@ body.dark {
   --color-muted: var(--color-muted-dark);
   --color-border: var(--color-border-dark);
 
-  /* Ionic bridge (DARK) */
+  /* 🔥 Ionic bridge (DARK) */
   --ion-background-color: var(--color-bg-dark);
   --ion-text-color: var(--color-text-dark);
   --ion-item-background: #111111;
@@ -71,7 +76,7 @@ body.dark {
 }
 
 /* ==========================================================================
-   TYPOGRAPHY (GLOBAL + FIX PARA DARK MODE)
+   TYPOGRAPHY
    ========================================================================== */
 h1,
 h2,
@@ -89,7 +94,7 @@ p {
   margin: 0;
 }
 
-/* Garantir títulos e labels legíveis em dark mode */
+/* Garantir labels e títulos legíveis */
 body.dark {
   ion-label,
   ion-text,
@@ -99,7 +104,7 @@ body.dark {
 }
 
 /* ==========================================================================
-   IONIC COMPONENT BASE STYLES
+   IONIC COMPONENTS
    ========================================================================== */
 
 /* Toolbar */
@@ -121,10 +126,8 @@ ion-card {
 }
 
 /* ==========================================================================
-   KPI CARDS (DASHBOARD)
+   KPI CARDS
    ========================================================================== */
-
-/* Light mode */
 ion-card.kpi-card,
 .kpi-card {
   background: var(--color-brand);
@@ -132,11 +135,9 @@ ion-card.kpi-card,
   border: none;
 }
 
-/* Dark mode */
 body.dark ion-card.kpi-card,
 body.dark .kpi-card {
   background: #111111;
-  color: #ffffff;
 }
 
 /* ==========================================================================
@@ -157,7 +158,7 @@ ion-toggle {
 }
 
 /* ==========================================================================
-   TABS (BOTTOM NAV)
+   TABS
    ========================================================================== */
 ion-tab-bar {
   --background: var(--ion-background-color);
@@ -174,7 +175,7 @@ ion-tab-button {
 }
 
 /* ==========================================================================
-   ALERTS (CONFIRM DELETE)
+   ALERTS
    ========================================================================== */
 ion-alert {
   --background: var(--ion-card-background);
@@ -195,7 +196,7 @@ ion-alert .alert-button-role-cancel {
 }
 
 /* ==========================================================================
-   UTILITIES (GLOBAL CLASSES)
+   UTILITIES
    ========================================================================== */
 .container {
   max-width: 420px;
@@ -220,7 +221,7 @@ ion-alert .alert-button-role-cancel {
 }
 
 /* ==========================================================================
-   FEEDBACK / STATES
+   FEEDBACK
    ========================================================================== */
 .delete-toast {
   --background: #dc2626;

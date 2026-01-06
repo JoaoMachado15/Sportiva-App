@@ -10,9 +10,10 @@ export class ThemeService {
   private loadTheme() {
     const stored = localStorage.getItem('dark-mode');
 
+    // 🔥 Nunca seguir o browser
+    // Primeira vez → light mode
     if (stored === null) {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      this.setDarkTheme(prefersDark);
+      this.setDarkTheme(false);
       return;
     }
 
