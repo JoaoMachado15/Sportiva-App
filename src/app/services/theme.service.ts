@@ -9,9 +9,14 @@ export class ThemeService {
 
   private loadTheme() {
     const stored = localStorage.getItem('dark-mode');
-    const isDark = stored === 'true';
 
-    document.body.classList.toggle('dark', isDark);
+    if (stored === null) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      this.setDarkTheme(prefersDark);
+      return;
+    }
+
+    this.setDarkTheme(stored === 'true');
   }
 
   setDarkTheme(isDark: boolean) {

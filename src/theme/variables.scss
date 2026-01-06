@@ -1,32 +1,27 @@
 :root {
-  --ion-font-family: 'Inter', system-ui, sans-serif;
+  /* ---------- FONT ---------- */
+  --font-family-base: 'Inter', system-ui, sans-serif;
 
-  --ion-background-color: #f8fafc;
-  --ion-text-color: #0f172a;
+  /* ---------- COLORS ---------- */
+  --color-bg: #ffffff;
+  --color-text: #000000;
+  --color-brand: #f06800;
 
-  --ion-card-background: #ffffff;
-  --ion-item-background: #ffffff;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
 
-  --ion-toolbar-background: #ffffff;
-  --ion-toolbar-color: #0f172a;
+  /* ---------- DARK MODE ---------- */
+  --color-bg-dark: #000000;
+  --color-text-dark: #ffffff;
+  --color-muted-dark: #9ca3af;
+  --color-border-dark: #1f2933;
 
-  --ion-color-primary: #3b82f6;
-  --ion-color-success: #22c55e;
-  --ion-color-danger: #ef4444;
-  --ion-color-medium: #64748b;
+  /* ---------- RADII ---------- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
 
-}
-
-
-
-body {
-  color: var(--ion-text-color);
-}
-
-h1, h2, h3 {
-  color: var(--ion-text-color);
-}
-
-p {
-  color: var(--ion-color-medium);
+  /* ---------- SIZES ---------- */
+  --btn-height: 48px;
+  --toolbar-height: 80px;
 }

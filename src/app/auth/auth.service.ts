@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   // ---------- REGISTER ----------
-
+  
   async register(
     name: string,
     email: string,

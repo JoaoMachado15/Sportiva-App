@@ -20,7 +20,7 @@ register();
     IonContent,
     IonButton,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // ✅ ISTO RESOLVE O ERRO
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './intro.page.html',
   styleUrls: ['./intro.page.scss'],
 })
