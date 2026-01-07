@@ -18,7 +18,7 @@
 @import "@ionic/angular/css/palettes/dark.class.css";
 
 /* ==========================================================================
-   RESET + TRANSITIONS
+   RESET
    ========================================================================== */
 *,
 *::before,
@@ -27,40 +27,35 @@
 }
 
 * {
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* ==========================================================================
-   BASE THEME (LIGHT) + IONIC BRIDGE
+   BASE THEME + IONIC BRIDGE
    ========================================================================== */
+html {
+  color-scheme: light;
+}
+
 body {
   font-family: var(--font-family-base);
   background: var(--color-bg);
   color: var(--color-text);
   margin: 0;
 
-  /* 🔥 Ionic bridge (LIGHT) */
   --ion-background-color: var(--color-bg);
   --ion-text-color: var(--color-text);
   --ion-item-background: var(--color-bg);
   --ion-card-background: var(--color-bg);
+  
 }
 
-/* Impedir browser de forçar dark mode */
-html {
-  color-scheme: light;
-}
-
-/* Ion content deve seguir o tema */
 ion-content {
   --background: var(--ion-background-color);
 }
 
 /* ==========================================================================
-   DARK MODE OVERRIDES + IONIC BRIDGE
+   DARK MODE
    ========================================================================== */
 body.dark {
   --color-bg: var(--color-bg-dark);
@@ -68,7 +63,6 @@ body.dark {
   --color-muted: var(--color-muted-dark);
   --color-border: var(--color-border-dark);
 
-  /* 🔥 Ionic bridge (DARK) */
   --ion-background-color: var(--color-bg-dark);
   --ion-text-color: var(--color-text-dark);
   --ion-item-background: #111111;
@@ -78,12 +72,7 @@ body.dark {
 /* ==========================================================================
    TYPOGRAPHY
    ========================================================================== */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   color: var(--ion-text-color);
   font-weight: 600;
   margin: 0;
@@ -94,29 +83,15 @@ p {
   margin: 0;
 }
 
-/* Garantir labels e títulos legíveis */
-body.dark {
-  ion-label,
-  ion-text,
-  .section-title {
-    color: var(--ion-text-color) !important;
-  }
-}
-
 /* ==========================================================================
    IONIC COMPONENTS
    ========================================================================== */
-
-/* Toolbar */
 ion-toolbar {
   --background: var(--ion-background-color);
   --color: var(--ion-text-color);
   --min-height: var(--toolbar-height);
-  --padding-top: 20px;
-  --padding-bottom: 20px;
 }
 
-/* Items & Cards */
 ion-item,
 ion-card {
   background: var(--ion-card-background);
@@ -128,15 +103,13 @@ ion-card {
 /* ==========================================================================
    KPI CARDS
    ========================================================================== */
-ion-card.kpi-card,
-.kpi-card {
+ion-card.kpi-card {
   background: var(--color-brand);
   color: #ffffff;
   border: none;
 }
 
-body.dark ion-card.kpi-card,
-body.dark .kpi-card {
+body.dark ion-card.kpi-card {
   background: #111111;
 }
 
@@ -149,12 +122,6 @@ ion-button {
   height: var(--btn-height);
   font-weight: 600;
   border-radius: var(--radius-lg);
-}
-
-/* Toggle */
-ion-toggle {
-  --handle-background-checked: var(--color-brand);
-  --track-background-checked: rgba(240, 104, 0, 0.4);
 }
 
 /* ==========================================================================
@@ -175,6 +142,78 @@ ion-tab-button {
 }
 
 /* ==========================================================================
+   SEGMENTS (Activities filters)
+   ========================================================================== */
+
+ion-segment {
+  --background: transparent;
+  --color: var(--color-muted);
+  --color-checked: var(--color-brand);
+  --indicator-color: var(--color-brand);
+}
+
+ion-segment-button {
+  --color: var(--color-muted);
+  --color-checked: var(--color-brand);
+  font-weight: 600;
+}
+
+/* DARK MODE */
+body.dark ion-segment {
+  --color: var(--color-muted-dark);
+}
+
+body.dark ion-segment-button {
+  --color: var(--color-muted-dark);
+  --color-checked: var(--color-brand);
+}
+
+/* ==========================================================================
+   ACTIVITIES LIST
+   ========================================================================== */
+
+ion-item-sliding ion-item {
+  --min-height: 64px;        /* default é ~72/80 */
+
+}
+
+ion-item-sliding ion-label h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  
+}
+
+
+
+
+ion-item-sliding ion-label p {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+body.dark ion-item-sliding ion-label p {
+  color: var(--color-muted-dark);
+}
+
+/* Favorite star button */
+ion-item-sliding ion-button[slot="start"] {
+  --background: transparent;
+  --background-hover: transparent;
+  --background-activated: transparent;
+  --background-focused: transparent;
+
+  padding: 0;
+  margin-right: 8px;
+  min-width: auto;
+}
+
+ion-item-sliding ion-button ion-icon {
+  font-size: 20px;
+  color: var(--color-brand);
+}
+
+
+/* ==========================================================================
    ALERTS
    ========================================================================== */
 ion-alert {
@@ -184,48 +223,193 @@ ion-alert {
 
 body.dark ion-alert {
   --background: #111111;
-  --color: #ffffff;
-}
-
-ion-alert .alert-button {
-  color: var(--color-brand);
-}
-
-ion-alert .alert-button-role-cancel {
-  color: var(--ion-text-color);
 }
 
 /* ==========================================================================
-   UTILITIES
+   ION-DATETIME (MODAL)
    ========================================================================== */
-.container {
-  max-width: 420px;
-  margin: auto;
-  padding: 16px;
+ion-datetime {
+  --background: var(--ion-card-background);
+  --color: var(--ion-text-color);
+
+  --day-background-selected: var(--color-brand);
+  --day-color-selected: #ffffff;
+  --day-today-color: var(--color-brand);
+
+  --button-color: var(--color-brand);
+  --wheel-item-color: var(--ion-text-color);
+  --wheel-item-color-active: var(--color-brand);
+   
 }
 
-.section-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-muted);
-  margin: 20px 16px 8px;
-  text-transform: uppercase;
+ion-datetime-button {
+  width: 100%;
 }
 
-.logout-button {
-  --background: transparent;
-  --color: #dc2626;
-  border: 1px solid #dc2626;
+ion-datetime-button::part(native) {
+  width: 100%;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  background: var(--ion-card-background);
+  color: var(--ion-text-color);
+
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+
+  padding: 0 14px;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+
+body.dark ion-datetime {
+  --background: #111111;
+ 
+}
+
+/* Picker fix */
+ion-modal ion-picker {
+  --background: #111111;
+}
+
+ion-modal ion-picker-column-option {
+  color: #ffffff;
+}
+
+ion-modal ion-picker-column-option[aria-selected="true"] {
+  color: var(--color-brand);
+  font-weight: 600;
+}
+
+/* Datetime button */
+ion-datetime-button::part(native) span {
+  display: inline-flex;
+  align-items: center;
+
+  background: transparent !important;
+  color: var(--ion-text-color);
+
   font-weight: 500;
 }
 
+ion-datetime-button::part(native) span + span::before {
+  content: "•";
+  margin: 0 8px;
+  color: var(--color-muted);
+}
+
+
+body.dark ion-datetime-button::part(native) {
+  background: #111111;
+  color: #ffffff;
+  border-color: var(--color-border-dark);
+}
+
+body.dark ion-datetime-button::part(native) span {
+  color: #ffffff;
+}
+
+
 /* ==========================================================================
-   FEEDBACK
+   AUTH PAGES (LOGIN / REGISTER)
    ========================================================================== */
-.delete-toast {
-  --background: #dc2626;
-  --color: #ffffff;
-  --border-radius: var(--radius-md);
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  --padding-top: 0;
+  --padding-bottom: 0;
+  
+}
+
+/* Container central */
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100dvh;
+}
+
+/* Header (título + subtítulo) */
+.login-container .header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-container .header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.login-container .header h2 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.login-container .header p {
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+/* Form */
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Inputs */
+.login-container ion-item {
+  --background: var(--ion-card-background);
+  border-radius: var(--radius-md);
+}
+
+/* Ícones dos inputs */
+.login-container ion-icon {
+  color: var(--color-muted);
+}
+
+/* Botão principal */
+.login-container ion-button {
+  margin-top: 12px;
+}
+
+/* Footer */
+.login-container .footer {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.login-container .footer p {
+  font-size: 0.9rem;
+}
+
+.login-container .footer a {
+  color: var(--color-brand);
   font-weight: 600;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   DARK MODE TWEAKS (LOGIN)
+   ========================================================================== */
+
+body.dark .login-container ion-item {
+  --background: #111111;
+}
+
+body.dark .login-container ion-icon {
+  color: var(--color-muted-dark);
 }

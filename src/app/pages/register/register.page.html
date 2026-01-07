@@ -1,57 +1,47 @@
-<ion-content fullscreen class="ion-padding register-page">
-  <div class="register-container">
-
+<ion-content fullscreen class="ion-padding login-page">
+  <div class="login-container">
     <div class="header">
-      <h1>Create account</h1>
+      <h1>SPORTIVA</h1>
+      <h2>Create account</h2>
       <p>Start tracking your sports activities</p>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="submit()">
-
       <ion-item fill="outline">
-        <ion-icon name="person-outline" slot="start"></ion-icon>
-        <ion-input
-          type="text"
-          placeholder="Name"
-          formControlName="name">
+        <ion-input type="text" placeholder="Name" formControlName="name">
         </ion-input>
       </ion-item>
 
       <ion-item fill="outline">
-        <ion-icon name="mail-outline" slot="start"></ion-icon>
-        <ion-input
-          type="email"
-          placeholder="Email"
-          formControlName="email">
+        <ion-input type="email" placeholder="Email" formControlName="email">
         </ion-input>
       </ion-item>
 
       <ion-item fill="outline">
-        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
         <ion-input
           type="password"
           placeholder="Password"
-          formControlName="password">
+          formControlName="password"
+        >
         </ion-input>
       </ion-item>
 
       <ion-item fill="outline">
-        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
         <ion-input
           type="password"
           placeholder="Confirm password"
-          formControlName="confirmPassword">
+          formControlName="confirmPassword"
+        >
         </ion-input>
       </ion-item>
 
       <ion-button
         expand="block"
         type="submit"
-        [disabled]="form.invalid || loading">
-
+        [disabled]="form.invalid || loading"
+      >
         <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
         <span *ngIf="!loading">Create account</span>
-
       </ion-button>
     </form>
 
@@ -61,6 +51,5 @@
         <a (click)="goToLogin()">Login</a>
       </p>
     </div>
-
   </div>
 </ion-content>

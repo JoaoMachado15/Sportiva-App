@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -47,6 +47,7 @@ import { SPORTS } from '../constants/sports.constants';
     IonBackButton,
     IonButtons,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AddActivityPage {
   sports = SPORTS;

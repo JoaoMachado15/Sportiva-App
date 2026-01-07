@@ -3,12 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/activities"></ion-back-button>
     </ion-buttons>
-
-    <ion-title> {{ isEdit ? 'Edit Activity' : 'Add Activity' }} </ion-title>
+    <ion-title>{{ isEdit ? 'Edit Activity' : 'Add Activity' }}</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
   <form [formGroup]="form" (ngSubmit)="submit()">
+
     <ion-item>
       <ion-label position="stacked">Sport</ion-label>
       <ion-select formControlName="sport">
@@ -17,28 +18,36 @@
         </ion-select-option>
       </ion-select>
     </ion-item>
+
     <ion-item>
       <ion-label position="stacked">Duration (minutes)</ion-label>
       <ion-input type="number" formControlName="duration"></ion-input>
     </ion-item>
+
     <ion-item>
       <ion-label position="stacked">Date & time</ion-label>
+      <ion-datetime-button
+        datetime="activityDate"
+        trigger="datetime-modal">
+      </ion-datetime-button>
+    </ion-item>
 
+    <ion-modal id="datetime-modal" keep-contents-mounted="true">
       <ion-datetime
+        id="activityDate"
         formControlName="date"
         presentation="date-time"
         locale="en-US"
         hour-cycle="h12"
-        show-default-buttons="true"
-        [value]="form.controls.date.value"
-      >
+        show-default-buttons="true">
       </ion-datetime>
-    </ion-item>
+    </ion-modal>
 
     <ion-item>
       <ion-label position="stacked">Location</ion-label>
       <ion-input formControlName="location"></ion-input>
     </ion-item>
+
     <ion-item>
       <ion-label position="stacked">Intensity</ion-label>
       <ion-select formControlName="intensity">
@@ -47,12 +56,15 @@
         <ion-select-option value="high">High</ion-select-option>
       </ion-select>
     </ion-item>
+
     <ion-item>
       <ion-label position="stacked">Notes</ion-label>
       <ion-textarea formControlName="notes"></ion-textarea>
     </ion-item>
+
     <ion-button expand="block" type="submit">
       {{ isEdit ? 'Save Changes' : 'Save Activity' }}
     </ion-button>
-  </form></ion-content
->
+
+  </form>
+</ion-content>
