@@ -232,14 +232,24 @@ ion-datetime {
   --background: var(--ion-card-background);
   --color: var(--ion-text-color);
 
+  /* Calendar */
   --day-background-selected: var(--color-brand);
   --day-color-selected: #ffffff;
   --day-today-color: var(--color-brand);
 
+  /* Buttons */
   --button-color: var(--color-brand);
+
+  /* Wheel (CRÍTICO) */
+  --wheel-background: var(--ion-card-background);
   --wheel-item-color: var(--ion-text-color);
   --wheel-item-color-active: var(--color-brand);
-   
+
+  /* Fade correto */
+  --wheel-fade-background-rgb: 17, 17, 17;
+
+  /* Highlight central */
+  --wheel-highlight-background: rgba(240, 104, 0, 0.25);
 }
 
 ion-datetime-button {
@@ -266,9 +276,13 @@ ion-datetime-button::part(native) {
 }
 
 
+
+/* DARK MODE FORCE */
 body.dark ion-datetime {
   --background: #111111;
- 
+  --wheel-background: #111111;
+  --wheel-item-color: #ffffff;
+  --wheel-fade-background-rgb: 17, 17, 17;
 }
 
 /* Picker fix */
