@@ -10,10 +10,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content mode="md">
 
   <!-- FILTER SEGMENT -->
   <ion-segment
+    mode="md"
     [value]="filter"
     (ionChange)="onFilterChange($event)"
     class="activity-filter"
