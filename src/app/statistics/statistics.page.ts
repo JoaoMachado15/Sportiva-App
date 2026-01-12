@@ -1,4 +1,10 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonContent,
@@ -11,8 +17,10 @@ import {
   IonRow,
   IonCol,
   IonText,
-
 } from '@ionic/angular/standalone';
+
+import { Subscription } from 'rxjs';
+import Chart from 'chart.js/auto';
 
 import { ActivitiesService } from '../services/activities.service';
 import { Activity, SportType } from '../models/activity.model';
@@ -27,8 +35,6 @@ import {
 import { filterActivitiesByPeriod } from '../utils/activity-period.util';
 import { buildSportTimeChart } from '../dashboard/dashboard-chart.util';
 import { buildActivitiesByMonthChart } from '../utils/statistics-chart.util';
-
-import Chart from 'chart.js/auto';
 
 type StatsPeriod = 'week' | 'month';
 
@@ -49,7 +55,6 @@ type StatsPeriod = 'week' | 'month';
     IonRow,
     IonCol,
     IonText,
-
   ],
 })
 export class StatisticsPage {
@@ -57,7 +62,6 @@ export class StatisticsPage {
   @ViewChild('monthChart') monthChartRef!: ElementRef<HTMLCanvasElement>;
 
   activities: Activity[] = [];
-  period: StatsPeriod = 'week';
 
   timeChart?: Chart;
   monthChart?: Chart;
@@ -76,22 +80,11 @@ export class StatisticsPage {
     });
   }
 
-  onPeriodChange(event: any) {
-    this.period = event.detail.value;
-    setTimeout(() => this.buildCharts());
-  }
-
-  // ===== FILTERED ACTIVITIES =====
-  get periodActivities(): Activity[] {
-    return filterActivitiesByPeriod(this.activities, this.period);
-  }
-
-  // ===== CHARTS =====
   private buildCharts() {
     if (this.timeChartRef) {
       this.timeChart = buildSportTimeChart(
         this.timeChartRef.nativeElement,
-        this.periodActivities,
+        this.activities,
         this.sportLabels,
         this.timeChart
       );
@@ -100,7 +93,7 @@ export class StatisticsPage {
     if (this.monthChartRef) {
       this.monthChart = buildActivitiesByMonthChart(
         this.monthChartRef.nativeElement,
-        this.periodActivities,
+        this.activities,
         this.monthChart
       );
     }
@@ -108,15 +101,16 @@ export class StatisticsPage {
 
   // ===== KPIs =====
   get totalActivities(): number {
-    return getTotalActivities(this.periodActivities);
+    return getTotalActivities(this.activities);
   }
 
   get totalHours(): string {
-    return (getTotalMinutes(this.periodActivities) / 60).toFixed(1);
+    return (getTotalMinutes(this.activities) / 60).toFixed(1);
   }
 
   get mostPracticedSport(): string {
-    const sport = getMostPracticedSport(this.periodActivities);
+    const sport = getMostPracticedSport(this.activities);
     return sport ? this.sportLabels[sport] : '—';
   }
 }
+
